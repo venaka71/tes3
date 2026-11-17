@@ -15,62 +15,58 @@
   .hud-info {
     position: absolute; top: 10px; right: 12px;
     background: rgba(15,23,42,0.75); color: #f8fafc;
-    padding: 6px 12px; border-radius: 10px; font-size: 12px;
+    padding: 6px 12px; border-radius: 10px; font-size: 11px;
     border: 1px solid rgba(56,189,248,0.4);
   }
-  /* Cast Gauge */
   #castBarWrap {
-    position: absolute; bottom: 185px; right: 36px;
-    width: 120px; height: 16px; background: rgba(0,0,0,0.55);
+    position: absolute; bottom: 175px; right: 36px;
+    width: 116px; height: 15px; background: rgba(0,0,0,0.55);
     border: 2px solid #fff; border-radius: 10px; overflow: hidden; display: none;
   }
   #castFill {
     width: 0%; height: 100%;
     background: linear-gradient(90deg, #22c55e, #eab308, #ef4444);
   }
-  /* Vertical Minigame Bar */
   #reelGameWrap {
-    position: absolute; top: 18%; left: 56%;
-    width: 44px; height: 250px;
-    background: rgba(15, 23, 42, 0.85);
-    border: 3px solid #cbd5e1; border-radius: 22px;
+    position: absolute; top: 20%; left: 58%;
+    width: 44px; height: 240px;
+    background: #3B6E7C;
+    border: 4px solid #F8FAFC; border-radius: 14px;
     display: none; overflow: hidden;
   }
   #catchZone {
-    position: absolute; left: 4px; width: 30px; height: 64px;
+    position: absolute; left: 3px; width: 30px; height: 64px;
     background: #8CE063; border: 2px solid #eab308;
-    border-radius: 14px; bottom: 20px;
+    border-radius: 10px; bottom: 20px;
   }
   #fishIcon {
-    position: absolute; left: 8px; width: 22px; height: 18px;
+    position: absolute; left: 7px; width: 22px; height: 18px;
     background: #1C262B; border-radius: 50% 50% 40% 40%;
     bottom: 110px;
   }
   #progressWrap {
-    position: absolute; top: 18%; left: calc(56% + 52px);
-    width: 12px; height: 250px; background: rgba(0,0,0,0.5);
+    position: absolute; top: 20%; left: calc(58% + 48px);
+    width: 12px; height: 240px; background: rgba(0,0,0,0.5);
     border-radius: 6px; overflow: hidden; display: none;
-    border: 1px solid #fff;
+    border: 2px solid #fff;
   }
   #progressFill {
     position: absolute; bottom: 0; left: 0; width: 100%; height: 30%;
-    background: #22c55e;
+    background: #eab308;
   }
-  /* Main Action Button (Mancing / Lepas! / Angkat / Strike! / Tarik) */
   #actionBtn {
-    position: absolute; bottom: 42px; right: 38px;
-    width: 116px; height: 116px; border-radius: 50%;
+    position: absolute; bottom: 32px; right: 32px;
+    width: 118px; height: 118px; border-radius: 50%;
     background: #1B75BC; border: 5px solid #e0f2fe;
     color: #fff; font-weight: 800; font-size: 16px;
     display: flex; align-items: center; justify-content: center;
     text-align: center; box-shadow: 0 8px 20px rgba(0,0,0,0.4);
   }
-  /* Catch Popup */
   #catchPopup {
     position: absolute; top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 240px; height: 190px; background: #FDFBF7;
-    border-radius: 16px; border: 4px solid #eab308;
+    width: 240px; height: 185px; background: #FDFBF7;
+    border-radius: 16px; border: 4px solid #cbd5e1;
     display: none; flex-direction: column;
     align-items: center; justify-content: center;
     color: #1e293b; font-weight: bold; box-shadow: 0 12px 30px rgba(0,0,0,0.5);
@@ -78,7 +74,7 @@
 </style>
 </head>
 <body>
-  <div class="hud-info" id="simInfo">Mode Latihan di Dalam App (Gunakan Overlay di Atas Layar Ini atau Buka Game Asli)</div>
+  <div class="hud-info">Layar Tes Simulasi (Atau langsung buka Game Memancing Anda)</div>
   <div id="castBarWrap"><div id="castFill"></div></div>
 
   <div id="reelGameWrap">
@@ -88,20 +84,20 @@
   <div id="progressWrap"><div id="progressFill"></div></div>
 
   <div id="catchPopup" onclick="closePopup()">
-    <div style="font-size:28px;">🐟</div>
-    <div style="margin-top:6px;">IKAN TERTANGKAP!</div>
-    <div style="font-size:11px; color:#64748b; margin-top:8px;">Ketuk tombol untuk lanjut</div>
+    <div style="font-size:28px;">🦐</div>
+    <div style="margin-top:6px;">Udang 17 gr</div>
+    <div style="font-size:11px; color:#64748b; margin-top:8px;">Ketuk untuk menutup</div>
   </div>
 
   <div id="actionBtn">Mancing</div>
 
 <script>
-  let state = "MANCING"; // MANCING, LEPAS, ANGKAT, STRIKE, TARIK, POPUP
+  let state = "MANCING";
   let holding = false;
   let castProgress = 0;
   let barPos = 20;
   let fishPos = 110;
-  let fishVel = 2.2;
+  let fishVel = 2.0;
   let reelProgress = 35;
   let waitTimer = null;
 
@@ -140,7 +136,7 @@
   function onUp(e) {
     e.preventDefault();
     holding = false;
-    if (state === "LEPAS" && castProgress > 15) {
+    if (state === "LEPAS" && castProgress > 12) {
       startWaitingForFish();
     }
   }
@@ -169,7 +165,7 @@
     reelWrap.style.display = "block";
     progWrap.style.display = "block";
     barPos = 30;
-    fishPos = 110;
+    fishPos = 105;
     reelProgress = 40;
   }
 
@@ -181,22 +177,20 @@
 
   setInterval(() => {
     if (state === "LEPAS") {
-      castProgress += 4;
+      castProgress += 5;
       if (castProgress >= 100) {
         startWaitingForFish();
       } else {
         castFill.style.width = castProgress + "%";
       }
     } else if (state === "TARIK") {
-      // Move bar based on hold
-      if (holding) barPos = Math.min(180, barPos + 5.5);
+      if (holding) barPos = Math.min(172, barPos + 5.5);
       else barPos = Math.max(0, barPos - 4.0);
 
-      // Move fish
-      if (Math.random() < 0.08) fishVel = (Math.random() - 0.48) * 7.5;
+      if (Math.random() < 0.08) fishVel = (Math.random() - 0.48) * 7.0;
       fishPos += fishVel;
       if (fishPos < 10) { fishPos = 10; fishVel = Math.abs(fishVel); }
-      if (fishPos > 215) { fishPos = 215; fishVel = -Math.abs(fishVel); }
+      if (fishPos > 205) { fishPos = 205; fishVel = -Math.abs(fishVel); }
 
       catchZone.style.bottom = barPos + "px";
       fishIcon.style.bottom = fishPos + "px";
@@ -204,9 +198,11 @@
       const barCenter = barPos + 32;
       const fishCenter = fishPos + 9;
       if (Math.abs(barCenter - fishCenter) < 38) {
-        reelProgress = Math.min(100, reelProgress + 1.4);
+        catchZone.style.background = "#8CE063";
+        reelProgress = Math.min(100, reelProgress + 1.5);
       } else {
-        reelProgress = Math.max(0, reelProgress - 0.8);
+        catchZone.style.background = "#D4DC4E";
+        reelProgress = Math.max(0, reelProgress - 0.7);
       }
       progFill.style.height = reelProgress + "%";
 

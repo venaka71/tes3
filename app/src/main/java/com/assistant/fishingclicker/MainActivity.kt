@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.media.projection.MediaProjectionManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.Gravity
@@ -34,27 +35,27 @@ class MainActivity : AppCompatActivity() {
             setBackgroundColor(Color.parseColor("#0F172A"))
         }
 
-        // Top Control Header
         val controlCard = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            setPadding(36, 32, 36, 24)
+            setPadding(32, 28, 32, 20)
             background = GradientDrawable().apply {
                 setColor(Color.parseColor("#1E293B"))
             }
         }
 
         val title = TextView(this).apply {
-            text = "🎣 Auto Mancing Overlay (Sesuai Preview)"
-            textSize = 18f
+            text = "🎣 Auto Mancing v3.0 (Fix Deteksi & Fleksibel)"
+            textSize = 16f
             setTextColor(Color.WHITE)
-            setPadding(0, 0, 0, 8)
+            setPadding(0, 0, 0, 6)
         }
 
         val subtitle = TextView(this).apply {
-            text = "Aktifkan langkah 1 & 2, lalu tekan tombol 3 untuk memunculkan Pop-up Menu + Bulatan 1:KLIK (Merah) & 2:BAR (Biru dengan Laser Scanner)."
-            textSize = 12f
+            text = "• Geser bulatan kapan saja lewat label [✥ 1:KLIK] & [✥ 2:BAR] (bahkan saat bot jalan).
+• Tengah bulatan 100% tembus klik & tidak menghalangi deteksi warna."
+            textSize = 11.5f
             setTextColor(Color.parseColor("#94A3B8"))
-            setPadding(0, 0, 0, 16)
+            setPadding(0, 0, 0, 14)
         }
 
         val btnRow = LinearLayout(this).apply {
@@ -92,7 +93,7 @@ class MainActivity : AppCompatActivity() {
         btnRow.addView(btnAccessibility)
 
         val btnStart = Button(this).apply {
-            text = "3. MUNCULKAN POP-UP & 2 BULATAN DI LAYAR"
+            text = "3. AKTIFKAN POP-UP & DETEKSI LAYAR"
             textSize = 12f
             setBackgroundColor(Color.parseColor("#28A745"))
             setTextColor(Color.WHITE)
@@ -103,6 +104,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 if (FishingAccessibilityService.instance == null) {
                     Toast.makeText(this@MainActivity, "Aktifkan 2. Aksesibilitas (Auto Mancing Clicker Service) dulu!", Toast.LENGTH_LONG).show()
+                    startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
                     return@setOnClickListener
                 }
                 startActivityForResult(projectionManager.createScreenCaptureIntent(), REQUEST_PROJECTION)
@@ -114,7 +116,6 @@ class MainActivity : AppCompatActivity() {
         controlCard.addView(btnRow)
         controlCard.addView(btnStart)
 
-        // Built-in Simulator WebView so user can test the overlay right here or switch to the real game
         val webView = WebView(this).apply {
             settings.javaScriptEnabled = true
             settings.domStorageEnabled = true
@@ -134,13 +135,22 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_PROJECTION && resultCode == Activity.RESULT_OK && data != null) {
-            val serviceIntent = Intent(this, FloatingOverlayService::class.java).apply {
-                putExtra("RESULT_CODE", resultCode)
-                putExtra("DATA", data)
+        if (requestCode == REQUEST_PROJECTION) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                val serviceIntent = Intent(this, FloatingOverlayService::class.java).apply {
+                    putExtra("HAS_PROJECTION", true)
+                    putExtra("RESULT_CODE", resultCode)
+                    putExtra("DATA", data)
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    startForegroundService(serviceIntent)
+                } else {
+                    startService(serviceIntent)
+                }
+                Toast.makeText(this, "Overlay Aktif! Silakan buka Game Memancing Anda.", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "Izin tangkapan layar dibatalkan.", Toast.LENGTH_SHORT).show()
             }
-            startForegroundService(serviceIntent)
-            Toast.makeText(this, "Pop-up & 2 Bulatan Aktif! Anda bisa mengujinya di bawah atau buka Game.", Toast.LENGTH_LONG).show()
         }
     }
 }

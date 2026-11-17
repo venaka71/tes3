@@ -1,22 +1,7 @@
-# 🎣 Auto Mancing Overlay v2.0 (Sesuai Preview Simulasi)
+# 🎣 Auto Mancing Overlay v3.0 (Perbaikan Deteksi & Tombol Fleksibel)
 
-Proyek aplikasi Android ini telah disesuaikan **100% persis dengan tampilan dan mekanisme pada Preview Simulasi**:
-- **Menu Pop-up (`🎣 Auto Mancing Overlay`):** Memiliki indikator status *real-time*, tombol **`▶ MULAI AUTO MANCING`** (`⏹ HENTIKAN BOT`), tombol **`🎯 Snap Posisi`**, dan tombol **`✕ TUTUP`**.
-- **Bulatan 1 (`1: KLIK` - Merah `#FF3B30`):** Dilengkapi *crosshair* bidikan dan indikator efek tahan (*hold*) untuk otomatis menekan tombol **Mancing (Biru)** -> **Lepas! (Oranye)** -> diam saat **Angkat** -> ketuk cepat saat **Strike!** -> dan menahan/melepas tombol **Tarik (Hijau)**.
-- **Bulatan 2 (`2: BAR` - Biru `#007AFF`):** Dilengkapi animasi **Garis Laser Pemindai** yang memindai posisi vertikal **Ikan Hitam** dan **Bar Hijau/Kuning** secara *real-time* untuk mengatur durasi tahan tombol Tarik.
-- **Layar Simulasi Bawaan:** Di dalam menu utama aplikasi juga sudah disematkan layar simulasi latihan persis seperti *preview* agar Anda bisa langsung menguji *overlay* di dalam aplikasi sebelum membuka game aslinya.
-
----
-
-## Cara Download File `.APK` Langsung dari GitHub di HP Anda
-
-1. **Buat Repositori Baru di GitHub:**
-   - Buka [github.com/new](https://github.com/new) di browser HP atau laptop Anda.
-   - Beri nama repositori (misalnya `auto-mancing-apk`), pilih **Public**, lalu ketuk **Create repository**.
-2. **Upload File Proyek Ini:**
-   - Ekstrak file **`FishingAssistant_Android_Project-v2.zip`** ini.
-   - Di halaman repositori GitHub Anda, ketuk **uploading an existing file**, lalu pilih semua folder & file hasil ekstrak (`app`, `.github`, `build.gradle.kts`, `settings.gradle.kts`, `gradle.properties`, `README.md`) dan ketuk **Commit changes**.
-   *(Catatan: Pastikan folder `.github/workflows/build-apk.yml` ikut terunggah).*
-3. **Unduh File `.APK` yang Sudah Jadi:**
-   - GitHub akan otomatis mengompilasi aplikasi Anda dalam waktu sekitar **2 menit**.
-   - Buka halaman utama repositori GitHub Anda, lihat bagian **Releases** (di bagian bawah/samping halaman), lalu ketuk **`AutoMancing-Overlay-v2.apk`** untuk mengunduh dan menginstalnya langsung di HP Android Anda!
+Berdasarkan analisis video pengujian di dalam game:
+1. **Perbaikan Bug `RESULT_OK` & `MediaProjection` Landscape:** Memperbaiki inisialisasi tangkapan layar yang sebelumnya tidak berjalan saat tombol *MULAI* ditekan, serta menambahkan penyesuaian resolusi *Landscape* otomatis saat berpindah ke dalam game.
+2. **Tengah Bulatan 100% Jernih & Tembus Sentuhan (*Click-Through*):** Menghilangkan blok warna merah/biru di tengah bulatan agar tidak mengubah warna piksel tombol game saat dipindai dan tidak menghalangi ketukan otomatis maupun sentuhan jari Anda.
+3. **Gagang Geser Fleksibel (`[✥ 1:KLIK]` & `[✥ 2:BAR]`):** Anda bisa menggeser kedua bulatan kapan saja (bahkan saat bot sedang berjalan) dengan menarik label **`[✥ 1:KLIK]`** dan **`[✥ 2:BAR]`** di atas masing-masing bulatan.
+4. **Pengaturan Ukuran (`🔍 -` / `🔍 +`) & Minimize Menu (`[–]`):** Ukuran kedua bulatan dapat diperbesar atau diperkecil langsung dari menu *pop-up*, dan menu dapat diperkecil agar tidak menghalangi layar.
