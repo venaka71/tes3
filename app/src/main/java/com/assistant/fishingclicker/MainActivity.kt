@@ -44,15 +44,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         val title = TextView(this).apply {
-            text = "🎣 Auto Mancing v3.0 (Fix Deteksi & Fleksibel)"
+            text = "🎣 Auto Mancing v3.1 (Fix Deteksi & Fleksibel)"
             textSize = 16f
             setTextColor(Color.WHITE)
             setPadding(0, 0, 0, 6)
         }
 
         val subtitle = TextView(this).apply {
-            text = "• Geser bulatan kapan saja lewat label [✥ 1:KLIK] & [✥ 2:BAR] (bahkan saat bot jalan).
-• Tengah bulatan 100% tembus klik & tidak menghalangi deteksi warna."
+            text = "• Geser bulatan kapan saja lewat label [✥ 1:KLIK] & [✥ 2:BAR] (bahkan saat bot jalan).\n" +
+                   "• Tengah bulatan 100% tembus klik & tidak menghalangi deteksi warna."
             textSize = 11.5f
             setTextColor(Color.parseColor("#94A3B8"))
             setPadding(0, 0, 0, 14)
